@@ -1,0 +1,13 @@
+<%- include('partials/header.ejs') %>
+
+<main class="container">
+    <div class="post-detail">
+        <h1><%= post.title %></h1>
+        <p class="post-meta text-muted">Scritto da <%= post.author %> il <%= post.created_at.toDateString() %></p>
+        <div class="post-content">
+            <%= post.content %>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer.ejs') %>

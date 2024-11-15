@@ -1,0 +1,48 @@
+<%- include('partials/header.ejs') %>
+
+  <div class="login-container mt-5">
+    <h1>Login</h1>
+
+    <div class="login-row">
+      <div class="login-col-sm-8">
+        <div class="card-login">
+          <div class="card-body-login">
+
+            <!-- Makes POST request to /login route -->
+            <form action="/login" method="POST">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="username" placeholder="Enter your email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+              </div>
+
+              <div class="form-group">
+                <a href="/forgot-password" class="text-secondary">Hai dimenticato la password?</a>
+              </div>
+              
+              <button type="submit" class="btn btn-dark">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="google-col-sm-4">
+        <div class="card social-block">
+          <div class="card-body">
+            <h3 class="text-center">Login with Google</h3>
+            <a class="btn btn-block btn-outline-primary" href="/auth/google" role="button">
+              <i class="bi bi-google"></i>
+              Sign in with Google
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%- include('partials/footer.ejs') %>
+

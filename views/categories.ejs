@@ -1,0 +1,65 @@
+<%- include('partials/header.ejs') %>
+
+<main class="container-categories">
+    <h1 class="category-title text-center">All Posts for <%= categoryName %></h1>
+    
+    <!-- Display Posts -->
+    <div class="post-grid">
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(function(post) { %>
+                <div class="category-card-wrapper">
+                    <div class="card mb-4 shadow-sm category-card">
+                        <img src="<%= post.image_url %>" class="card-img-top" alt="Post image" id="card-image">
+                        <div class="card-body category-card-body">
+                            <h5 class="category-card-title" id="category-card-title"><%= post.title %></h5>
+                            <p class="category-card-text" id="card-paragraph"><%= (post.content || "").substring(0, 100) %>...</p>
+                            <p class="text-muted category-card-author" id="card-author">By <%= post.author %> on <%= post.created_at.toDateString() %></p>
+                            <a href="/posts/<%= post.id %>" class="btn btn-primary category-card-button">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No posts available for this category.</p>
+        <% } %>
+    </div>
+
+
+     <!-- Pagination -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <% if (currentPage > 1) { %>
+              <li class="page-item">
+                <a class="page-link" href="/category/<%= categoryId %>?page=<%= currentPage - 1 %>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            <% } else { %>
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&laquo;</span>
+              </li>
+            <% } %>
+      
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" href="/category/<%= categoryId %>?page=<%= i %>"><%= i %></a>
+              </li>
+            <% } %>
+      
+            <% if (currentPage < totalPages) { %>
+              <li class="page-item">
+                <a class="page-link" href="/category/<%= categoryId %>?page=<%= currentPage + 1 %>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <% } else { %>
+              <li class="page-item disabled">
+                <span class="page-link" aria-hidden="true">&raquo;</span>
+              </li>
+            <% } %>
+          </ul>
+        </nav>
+        
+</main>
+
+<%- include('partials/footer.ejs') %>

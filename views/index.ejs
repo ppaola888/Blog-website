@@ -1,0 +1,137 @@
+<%- include('partials/header.ejs') %>
+
+
+<main class="container">
+    <!--Featured Post-->
+    <div class="featured-post-section">
+        <div class="featured-post-content-wrapper">
+            <% if (posts.length > 0) { %>
+            <h1 class="featured-title">Benvenuto sul mio Blog</h1>
+            <p class="featured-description">Esplora i nostri articoli più recenti e interessanti. Scopri tutte le novità in ambito salute, tecnologia, viaggi e molto altro.</p>
+            <p><a href="/posts" class="featured-link">Continua a leggere...</a></p>
+            <% } else { %>
+                <p>Nessun post disponibile.</p>
+              <% } %>
+        </div>
+    </div>
+
+    <!-- Example Posts -->
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="post-example">
+                <div class="post-content">
+                    <strong class="post-category">In Evidenza</strong>
+                    <% if (posts.length > 0) { %> 
+                    <h3 class="mb-0"><%= posts[0].title %></h3>
+                    <div class="mb-1 text-muted"><%= posts[0].created_at.toDateString() %></div>
+                    <p class="mb-auto"><%= (posts[0].content || "").substring(0, 100) %>...</p>
+                    <a href="/posts/<%= posts[0].id %>" class="stretched-link">Continua a leggere</a>
+                    <% } else { %>
+                        <p>Nessun post disponibile.</p>
+                    <% } %>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <% if (posts.length > 0) { %>
+                    <img src="<%= posts[0].image_url %>" alt="Immagine Post" class="img-fluid" width="200" height="250">
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="post-example">
+                <div class="post-content">
+                    <strong class="post-category">Ultimi Post</strong>
+                    <% if (posts.length > 1) { %>
+                    <h3 class="mb-0"><%= posts[1].title %></h3>
+                    <div class="mb-1 text-muted"><%= posts[1].created_at.toDateString() %></div>
+                    <p class="mb-auto"><%= (posts[1].content || "").substring(0, 100) %>...</p>
+                    <a href="/posts/<%= posts[1].id %>" class="stretched-link">Continua a leggere</a>
+                    <% } else { %>
+                        <p>Nessun post recente disponibile.</p>
+                    <% } %>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <% if (posts.length > 1) { %>
+                    <img src="<%= posts[1].image_url %>" alt="Immagine Post" class="img-fluid" width="200" height="250">
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Random Post -->
+    <div class="row g-5">
+        <div class="col-md-8">
+        <div class="random-post-grid">
+        <% if (randomPosts && randomPosts.length > 0) { %>
+        <% randomPosts.forEach(function(post) { %>
+      <div class="card-random-post">
+        <img id="card-random-image" src="<%= post.image_url %>" alt="Immagine Post">
+        <div class="card-random-body">
+          <p id="card-random-author"><%= post.author %>, <%= post.created_at.toDateString() %></p>
+          <p id="card-random-title"><%= post.title %></p>
+          <p id="card-random-paragraph"><%= (post.content || "").substring(0, 100) %>...</p>
+          <a href="/posts/<%= post.id %>"><button class="card-random-button" type="button">Read More</button></a>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+    <p>No random posts available.</p>
+    <% } %>
+  </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <div class="sidebar">
+                <div class="about-section ">
+                    <h4 class="about-title ">About</h4>
+                    <p class="about-description mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at consectetur erat. Sed egestas tellus at eros sagittis tempor at id libero. Proin a nunc mollis, faucibus erat nec, elementum est. Morbi vel velit gravida, molestie odio a, eleifend leo. Nunc non condimentum sapien, laoreet tincidunt quam. Sed id sem vehicula, feugiat dolor nec, luctus neque. Curabitur euismod venenatis quam, at semper tortor laoreet at. Fusce consectetur turpis vitae odio ornare, eget mattis elit ornare. Nulla at placerat nisi. Aenean in libero viverra, tempus urna in, semper sem. Ut tempus massa eu est dictum, vel imperdiet sapien porttitor.</p>
+                </div>
+
+                <div class="archives-section">
+                    <h4 class="archives-title">Archives</h4>
+                    <% if (archives.length > 0) { %>
+                    <ol class="list-unstyled mb-0" id="archives-list">
+                        <% archives.slice(0, 8).forEach(function(archive) { %>
+                         <li><a href="/archives/<%= archive.month %>"><%= archive.month %> (<%= archive.count %> posts)</a></li>
+                        <% }); %>
+                    </ol>
+                    <button class="show-more-btn" id="show-more-btn">Show more</button>
+                    <% } else { %>
+                    <p>No archives available.</p>
+                    <% } %>
+                </div>
+
+                <div class="social-icons">
+                    <h4 class="title-icons">Follow Us</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/ppaola888">GitHub</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Facebook</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+document.getElementById('show-more-btn').addEventListener('click', function() {
+    var archivesList = document.getElementById('archives-list');
+    var button = document.getElementById('show-more-btn');
+    
+    if (archivesList.style.maxHeight === 'none') {
+         // If the list is already expanded, reduce its height
+        archivesList.style.maxHeight = '200px';
+        button.textContent = 'Show more'; 
+    } else {
+        // Expand the list
+        archivesList.style.maxHeight = 'none';
+        button.textContent = 'Show less'; 
+    }
+});
+</script>
+
+<%- include('partials/footer.ejs') %>

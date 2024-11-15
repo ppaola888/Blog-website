@@ -1,0 +1,49 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container-create-post mt-4">
+    <h2 class="create-post-title">Create a new post!</h2>
+    <form action="/create-post" method="POST" class="form-style" enctype="multipart/form-data">
+        <div class="create-post-input-group mb-3">
+            <label for="day" class="form-label">Date</label>
+            <input type="datetime-local" name="day" id="day" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="blog_title" class="form-label">Title</label>
+            <input type="text" id="blog_title" name="blog_title" class="form-control" placeholder="Blog Title" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea id="content" name="content" class="form-control" rows="5" placeholder="Share your content" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="authorname" class="form-label">Author</label>
+            <input type="text" name="authorname" id="authorname" class="form-control" placeholder="Author name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Category</label>
+            <select id="category_id" name="category_id" class="form-control" required>
+                <% categories.forEach(function(category) { %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <div class="mb-3 form-check">
+            <label class="form-check-label" for="featured">Set as Featured Post</label>
+            <input type="checkbox" id="featured" name="featured" class="form-check-input" placeholder="Featured Post">
+        </div>
+
+        <button type="submit" class="btn create-btn">Create</button>
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>

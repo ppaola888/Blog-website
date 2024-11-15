@@ -1,0 +1,32 @@
+<%- include('partials/header.ejs') %>
+
+<main>
+<div class="container-posts mt-4">
+    <h2 class="post-tile"><%= post.title %></h2>
+
+    <div class="post_grid">
+        <div class="post_item">
+            <img src="<%= post.image_url %>" class="post_image" alt="<%= post.title %>">
+
+            <p class="post_content"><%= post.content %></p>
+
+            <p><span class="post-meta-highlight"><%= post.created_at.toDateString() %></span> | <span class="post-meta-highlight"> Autore: <%= post.author %></span></p>
+
+            <div class="post_actions">
+                <a href="/post/<%= post.id %>/edit" class="btn-edit">Edit</a>
+
+                <form action="/posts/<%= post.id %>/delete?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="btn-back-wrapper">
+    <a href="/" class="btn-back">Back to Home</a>
+    </div>
+</div>
+</main>
+
+<%- include('partials/footer.ejs') %>

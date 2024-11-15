@@ -1,0 +1,80 @@
+<%- include('partials/header.ejs') %>
+
+<h1 class="title-archives text-center">Archives</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+<% if (archives.length > 0) { %>
+  <div class="archives-list">
+    <ul class="list-unstyled text-left">
+    <% archives.forEach(function(archive) { %>
+      <li class="archive-item mb-3">
+        <a href="/archives/<%= archive.month %>" class="archive-link">
+          <span class="archive-month"><%= archive.month %></span> 
+          <span class="archive-post-count">(<%= archive.count %> posts)</span>
+        </a>
+      </li>
+    <% }); %>
+  </ul>
+  </div>
+<% } else { %>
+  <p  class="text-center">No archives found.</p>
+<% } %>
+    </div>
+
+    <div class="col-md-6">
+<% if (posts.length > 0) { %>
+  <div class="posts-list">
+    <ul class="list-unstyled text-right">
+    <% posts.forEach(function(post) { %>
+      <li class="post-item mb-3">
+        <a href="/posts/<%= post.id %>" class="post-link"><%= post.title %></a> - <%= post.author %>
+      </li>
+    <% }); %>
+  </ul>
+  </div>
+<% } else { %>
+  <p class="text-center">No posts found for this month.</p>
+<% } %>
+</div>
+</div>
+</div>
+
+
+  <!-- Pagination for archives (months) -->
+<nav aria-label="Archives pagination">
+  <ul class="pagination justify-content-center">
+    <% if (archivePage > 1) { %>
+      <li class="page-item">
+        <a class="page-link" href="/archives/<%= month %>?archivePage=<%= archivePage - 1 %>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    <% } else { %>
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&laquo;</span>
+      </li>
+    <% } %>
+
+    <% for (let i = 1; i <= totalArchivePages; i++) { %>
+      <li class="page-item <%= i === archivePage ? 'active' : '' %>">
+        <a class="page-link" href="/archives/<%= month %>?archivePage=<%= i %>"><%= i %></a>
+      </li>
+    <% } %>
+
+    <% if (archivePage < totalArchivePages) { %>
+      <li class="page-item">
+        <a class="page-link" href="/archives/<%= month %>?archivePage=<%= archivePage + 1 %>" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    <% } else { %>
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&raquo;</span>
+      </li>
+    <% } %>
+  </ul>
+</nav>
+
+<%- include('partials/footer.ejs') %>

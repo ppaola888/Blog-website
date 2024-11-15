@@ -1,0 +1,39 @@
+<footer class="blog-footer">
+    <p>Copyright © <%= new Date().getFullYear() %> Travel Blog. All rights reserved.</p>
+    <button id="backToTopBtn" class="back-to-top">
+    <i class="bi bi-arrow-up"></i>
+</button>
+</footer>
+
+<script>
+   
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.onscroll = function() {
+        const scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+
+         // Show the button when we're close to the bottom (less than 100px from the bottom)
+        if (scrollHeight - scrollPosition - clientHeight < 100) {
+            backToTopBtn.style.opacity = 1; 
+            backToTopBtn.style.visibility = "visible"; 
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.opacity = 0; 
+            backToTopBtn.style.visibility = "hidden"; 
+            backToTopBtn.style.display = "none";
+        }
+    };
+
+
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+</body>
+</html>

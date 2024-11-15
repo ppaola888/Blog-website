@@ -1,0 +1,61 @@
+<%- include('partials/header.ejs') %>
+
+<h2 class="search-results text-center">Search Results</h2>
+
+<% if (posts.length > 0) { %>
+  <ul>
+    <% posts.forEach(post => { %>
+      <li>
+        <h3><a href="/posts/<%= post.id %>"><%= post.title %></a></h3>
+        <p class="search-results-content"><%= post.content.substring(0, 100) %>...</p>
+        <small>Scritto da <%= post.author %> il <%= new Date(post.created_at).toLocaleDateString() %></small>
+        <% if (post.name) { %>
+            <p class="search-results-category-name">Categoria: <%= post.name %></p>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+<% } else { %>
+  <p class="no-search-results">Nessun risultato trovato per i criteri di ricerca.</p>
+<% } %>
+
+
+  <!-- Paginazione -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+     
+      <% if (currentPage > 1) { %>
+        <li class="page-item">
+          <a class="page-link" href="/search?query=<%= searchQuery %>&page=<%= currentPage - 1 %>" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      <% } else { %>
+        <li class="page-item disabled">
+          <span class="page-link" aria-hidden="true">&laquo;</span>
+        </li>
+      <% } %>
+
+     
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+          <a class="page-link" href="/search?query=<%= searchQuery %>&page=<%= i %>"><%= i %></a>
+        </li>
+      <% } %>
+
+    
+      <% if (currentPage < totalPages) { %>
+        <li class="page-item">
+          <a class="page-link" href="/search?query=<%= searchQuery %>&page=<%= currentPage + 1 %>" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      <% } else { %>
+        <li class="page-item disabled">
+          <span class="page-link" aria-hidden="true">&raquo;</span>
+        </li>
+      <% } %>
+    </ul>
+  </nav>
+
+<%- include('partials/footer.ejs') %>

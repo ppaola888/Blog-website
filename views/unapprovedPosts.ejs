@@ -1,0 +1,80 @@
+<%- include('partials/header.ejs') %>
+
+<div class="container-unapproved-posts mt-5">
+    <h2 class="title-unapproved-posts text-center">Unapproved Posts</h2>
+        
+        <% if (unapprovedPosts.length > 0) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% unapprovedPosts.forEach(post => { %>
+                        <tr>
+                            <td data-label="Title"><a href="/posts/<%= post.id %>"><%= post.title %></a></td>
+                            <td data-label="Author"><%= post.author %></td>
+                            <td data-label="Date"><%= post.created_at.toDateString() %></td>
+                            <td>
+                                <div class="action-buttons">
+                                <form action="/posts/<%= post.id %>/approve" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-success">Approve</button>
+                                </form>
+                                <form action="/posts/<%= post.id %>/delete?_method=DELETE" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center">No unapproved posts at the moment.</p>
+        <% } %>
+
+        <a href="/" class="btn-back-to-home">Back to Home</a>
+    </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            
+            <% if (currentPage > 1) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/unapproved-posts?page=<%= currentPage - 1 %>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            <% } else { %>
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+            <% } %>
+            
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                    <a class="page-link" href="/unapproved-posts?page=<%= i %>"><%= i %></a>
+                </li>
+            <% } %>
+            
+            <% if (currentPage < totalPages) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/unapproved-posts?page=<%= currentPage + 1 %>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            <% } else { %>
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+
+
+<%- include('partials/footer.ejs') %>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Travel Blog</title>
+</head>
+<body>
+
+    <% if  (message && message.length > 0) { %>
+        <p id="message" class="flash-message"><%= message %></p>
+    <% } %>
+    <% if (success && success.length > 0) { %>
+        <p id="success-message" class="flash-success"><%= success %></p>
+    <% } %>
+    <% if (error && error.length > 0) { %>
+        <p id="error-message" class="flash-error"><%= error %></p>
+    <% } %>
+
+    <header class="blog-header">
+        <div class="header-row">
+            <div class="header-subscribe">
+                <a class="link-secondary" href="#">Subscribe</a>
+            </div>
+            <div class="header-logo">
+                <a class="blog-header-logo" href="/">Travel Blog</a>
+            </div>
+            <div class="header-actions">
+                <form action="/search" method="GET"  id="searchForm" class="search-form">
+                    <a class="link-secondary search-icon" href="#" id="searchIcon" aria-label="Search">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.442.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+                        </svg>
+                    </a>
+                    <input type="text" name="query" placeholder="Search..." aria-label="Search" class="search-bar">
+                </form>
+                <% if (user && user.role === 'admin') { %>
+                    <a class="nav-link" href="/unapproved-posts">Unapproved Posts</a>
+                    <a class="nav-link" href="/create-post">New Post</a>
+                    <a class="btn-outline" href="/logout">Logout</a>
+                <% } else if (user) { %>
+                    <a class="nav-link" href="/create-post">New Post</a>
+                    <a class="btn-outline" href="/logout">Logout</a>
+                <% } else { %>
+                    <a class="btn-outline" href="/login">Login</a>
+                    <a class="btn-outline" href="/register">Register</a>
+                <% } %>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+
+  <div class="nav-scroller">
+    <nav class="navbar">
+        <% if (categories && categories.length > 0) { %>
+        <% categories.forEach(function(category) { %>
+          <a class="nav-link" href="/category/<%= category.id %>"><%= category.name %></a>
+        <% }); %>
+        <% } %>
+      </nav>
+    </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const searchIcon = document.getElementById('searchIcon');
+    const searchForm = document.getElementById('searchForm');
+
+    searchIcon.addEventListener('click', function(event) {
+        event.preventDefault();  
+        searchForm.submit();  
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const flashMessages = document.querySelectorAll('.flash-message, .flash-success, .flash-error');
+
+        flashMessages.forEach(function(message) {
+            message.classList.add('show');
+
+            setTimeout(function() {
+                message.classList.remove('show');
+                message.classList.add('hide');
+            }, 5000);  
+        });
+    });
+   </script>
+
+
+

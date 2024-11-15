@@ -1,0 +1,37 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container edit-post-container">
+    <h2 class="text-center edit-post-title">Edit Post</h2>
+    <form action="/post/<%= post.id %>/update" method="POST" enctype="multipart/form-data" class="bg-dark p-4 rounded">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="title" value="<%= post.title %>" required class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea id="content" name="content" rows="5" class="form-control" required><%= post.content %></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload New Image</label>
+            <input type="file" name="image" id="image" accept="image/*" class="form-control">
+            <% if (post.image) { %>
+                <img src="<%= post.image %>" alt="Current Image" class="mt-2" style="max-width: 150px;">
+            <% } %>
+        </div>
+
+        <div class="mb-3">
+            <label for="authorname" class="form-label">Author</label>
+            <input type="text" name="authorname" id="authorname" value="<%= post.author %>" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+    <div class="text-center mt-4">
+    <a href="/" class="btn btn-secondary">Back to Home</a>
+</div>
+</div>
+
+<%- include("partials/footer.ejs") %>
